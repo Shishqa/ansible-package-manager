@@ -46,7 +46,7 @@ pip pep8
 
 To install these packages on these hosts, run
 ```
-./pack pkg_list
+$ ./pack pkg_list
 ```
 
 To uninstall packages, add `-u` flag
