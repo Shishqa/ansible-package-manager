@@ -51,3 +51,7 @@ $ ./pack pkg_list
 
 To uninstall packages, add `-u` flag
 
+## Ansible logs
+
+To see ansible output, add `log_path` option to your ansible config
+
