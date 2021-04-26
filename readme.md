@@ -1,5 +1,12 @@
 # YAAPI - yet another ansible package installer
 
+the name is self-descriptive :)
+
+### Supported package managers
+
+- apt
+- pip
+
 ## Input format
 
 ```ini
@@ -25,6 +32,22 @@ pip package_1 package_2 ... package_MK
 
 ## Usage
 
-> TBD
+Let the input looks like this:
+```
+$ cat pkg_list
+192.168.100.11
+192.168.100.12
+apt vifm nginx
+pip ansible
 
+192.168.100.13
+pip pep8
+```
+
+To install these packages on these hosts, run
+```
+./pack pkg_list
+```
+
+To uninstall packages, add `-u` flag
 
