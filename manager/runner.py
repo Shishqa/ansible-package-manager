@@ -17,10 +17,15 @@ def make_vars(host_pkg, state):
 
 def run(host_pkg, state):
     vars = make_vars(host_pkg, state)
+    
+    devnull = open(os.devnull, 'w')
+
     status = subprocess.run([
         "ansible-playbook", playbook_path,
         "--extra-vars", json.dumps(vars),
         "--limit", ":".join(list(vars['input']['pkg_list'].keys()))
-    ])
+    ], stdout=devnull, stderr=devnull)
+
+    devnull.close()
 
     return (status.returncode == 0)
