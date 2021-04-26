@@ -27,4 +27,4 @@ def run(host_pkg, state):
 
     devnull.close()
 
-    return (status.returncode == 0)
+    return status.returncode

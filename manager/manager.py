@@ -18,21 +18,23 @@ def uninstall_pkg(host_pkg):
     print('UNINSTALLING: ', end='')
     sys.stdout.flush()
     status = runner.run(host_pkg, "absent")
-    if not status:
+    if status != 0:
         print('FAILED')
     else:
         print('OK')
+    return status
 
 
 def install_pkg(host_pkg):
     print('INSTALLING: ', end='')
     sys.stdout.flush()
     status = runner.run(host_pkg, "present")
-    if not status:
+    if status != 0:
         print('FAILED')
         uninstall_pkg(host_pkg)
     else:
         print('OK')
+    return status
 
 
 def main():
@@ -46,9 +48,10 @@ def main():
         exit(1)
 
     if args.uninstall:
-        uninstall_pkg(host_pkg)
+        status = uninstall_pkg(host_pkg)
     else:
-        install_pkg(host_pkg)
+        status = install_pkg(host_pkg)
+    exit(status)
 
 
 if __name__ == '__main__':
