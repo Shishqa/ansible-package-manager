@@ -1,4 +1,4 @@
-# YAAPI - yet another ansible package installer
+# yet another ansible package manager
 
 the name is self-descriptive :)
 
