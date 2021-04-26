@@ -38,7 +38,13 @@ def install_pkg(host_pkg):
 def main():
     argparser = get_argparser()
     args = argparser.parse_args()
-    host_pkg = parser.parse(args.pkg_file)
+    try:
+        host_pkg = parser.parse(args.pkg_file)
+    except IOError:
+        print('[Error]: cannot open {}'.format(args.pkg_file))
+        argparser.print_usage()
+        exit(1)
+
     if args.uninstall:
         uninstall_pkg(host_pkg)
     else:
