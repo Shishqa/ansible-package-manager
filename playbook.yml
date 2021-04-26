@@ -1,10 +1,20 @@
 ---
-- hosts: all
+- hosts: localhost
   any_errors_fatal: true
   tasks:
-      - name: Ensure all the required packages are "{{ input.pkg_state }}"
-        import_role: 
-          name: pkg_manager
-        vars:
-          pkg: "{{ input.pkg_list[ansible_host] }}"
-          pkg_state: "{{ input.pkg_state }}"
+    - name: Validate hosts
+      fail: 
+        msg: "{{ item }} is not in inventory"
+      when: item not in hostvars
+      loop: "{{ input.pkg_list|flatten(levels=1) }}"
+
+
+- hosts: "{{ input.pkg_list|flatten(levels=1) }}"
+  any_errors_fatal: true
+  tasks:
+    - name: Ensure all the required packages are "{{ input.pkg_state }}"
+      import_role: 
+        name: pkg_manager
+      vars:
+        pkg: "{{ input.pkg_list[ansible_host] }}"
+        pkg_state: "{{ input.pkg_state }}"
