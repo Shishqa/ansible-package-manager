@@ -1,7 +1,6 @@
 192.168.100.11
-192.168.100.12
 apt vifm nginx
 pip ansible
-192.168.100.13
-apt bebea
-pip ansible
+
+192.168.100.12
+pip pep8

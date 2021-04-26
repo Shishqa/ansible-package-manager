@@ -3,13 +3,14 @@
   ansible.builtin.apt:
      name: python3-pip
      state: present
+  become: true
 
 - name: "Print all the pip packages to be {{ pkg_state }}"
   ansible.builtin.debug:
-    msg: "{{ host_packages[ansible_host]['pip'] }}"
+    msg: "{{ pkg['pip'] }}"
 
 - name: "Ensure pip packages are {{ pkg_state }}"
   ansible.builtin.pip:
-    name: "{{ host_packages[ansible_host]['pip'] | join(' ') }}"
+    name: "{{ pkg['pip'] | join(' ') }}"
     state: "{{ pkg_state }}"
-  when: host_packages[ansible_host]['pip'] | length > 0
+  when: pkg['pip'] | length > 0

@@ -1,0 +1,10 @@
+---
+- hosts: all
+  any_errors_fatal: true
+  tasks:
+      - name: Ensure all the required packages are "{{ input.pkg_state }}"
+        import_role: 
+          name: pkg_manager
+        vars:
+          pkg: "{{ input.pkg_list[ansible_host] }}"
+          pkg_state: "{{ input.pkg_state }}"

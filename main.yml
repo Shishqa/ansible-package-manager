@@ -1,9 +1,0 @@
----
-- name: Install everything
-  hosts: all
-  any_errors_fatal: true
-  become: true
-  roles:
-    - role: pkg-installer
-      vars:
-        pkg_state: "{{ state }}"

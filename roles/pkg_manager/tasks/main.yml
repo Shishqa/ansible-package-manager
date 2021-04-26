@@ -1,0 +1,8 @@
+# TODO: loop over package managers
+
+---
+- name: "Install all apt packages"
+  import_tasks: pkg_apt.yml
+
+- name: "Install all pip packages"
+  import_tasks: pkg_pip.yml

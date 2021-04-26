@@ -1,6 +1,0 @@
----
-- name: "Install all apt packages"
-  import_tasks: pkg-apt.yml
-
-- name: "Install all pip packages"
-  import_tasks: pkg-pip.yml
