@@ -4,7 +4,7 @@ import json
 import subprocess
 
 
-playbook_path = 'playbook.yml'
+playbook_path = 'main.yml'
 
 
 def make_vars(host_pkg, state):
