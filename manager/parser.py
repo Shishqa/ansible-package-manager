@@ -4,15 +4,20 @@ import copy
 pkg_managers = set(['apt', 'pip'])
 
 
+def init_host_pkg(host, host_pkg):
+    host_pkg[host] = {}
+    for manager in pkg_managers:
+        host_pkg[host][manager] = []
+
+
 def finalize_group(hosts, pkg, host_pkg):
     for host in hosts:
         if host not in host_pkg:
-            host_pkg[host] = copy.deepcopy(pkg)
-        else:
-            for manager in pkg:
-                if manager not in host_pkg[host]:
-                    host_pkg[host][manager] = []
-                host_pkg[host][manager] += copy.deepcopy(pkg[manager])
+            init_host_pkg(host, host_pkg) 
+        for manager in pkg:
+            if manager not in host_pkg[host]:
+                host_pkg[host][manager] = []
+            host_pkg[host][manager] += copy.deepcopy(pkg[manager])
     hosts.clear()
     pkg.clear()
 

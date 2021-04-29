@@ -30,8 +30,11 @@ def install_pkg(host_pkg):
 def manage_pkg(lines, uninstall, verbose):
     reader = rd.Reader(lines)
     host_pkg = parser.parse(reader)
+    print(host_pkg)
+    '''
     runner.set_verbose(verbose)
     if uninstall:
         return uninstall_pkg(host_pkg)
     else:
         return install_pkg(host_pkg)
+    '''

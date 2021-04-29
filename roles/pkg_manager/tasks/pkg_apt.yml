@@ -1,9 +1,9 @@
 ---
-- name: "Print all the apt packages to be {{ pkg_state }}"
+- name: Print all the apt packages to be "{{ pkg_state }}"
   ansible.builtin.debug:
     msg: "{{ pkg['apt'] }}"
 
-- name: "Ensure apt packages are {{ pkg_state }}"
+- name: Ensure apt packages are "{{ pkg_state }}"
   ansible.builtin.apt:
     pkg: "{{ pkg['apt'] }}"
     state: "{{ pkg_state }}"
