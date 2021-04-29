@@ -1,17 +1,7 @@
 import sys
-import argparse
-import parser
-import runner
-
-
-def get_argparser():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("pkg_file", type=str,
-                    help="path of file with packages and hosts")
-    ap.add_argument("-u", "--uninstall", action="store_true",
-                    help="uninstall packages listed in file \
-                        (installing by default)")
-    return ap
+from . import parser
+from . import runner
+from . import reader as rd
 
 
 def uninstall_pkg(host_pkg):
@@ -30,29 +20,18 @@ def install_pkg(host_pkg):
     sys.stdout.flush()
     status = runner.run(host_pkg, "present")
     if status != 0:
-        print('FAILED')
+        print('FAILED, RUNNING ROLLBACK')
         uninstall_pkg(host_pkg)
     else:
         print('OK')
     return status
 
 
-def main():
-    argparser = get_argparser()
-    args = argparser.parse_args()
-    try:
-        host_pkg = parser.parse(args.pkg_file)
-    except IOError:
-        print('[Error]: cannot open {}'.format(args.pkg_file))
-        argparser.print_usage()
-        exit(1)
-
-    if args.uninstall:
-        status = uninstall_pkg(host_pkg)
+def manage_pkg(lines, uninstall, verbose):
+    reader = rd.Reader(lines)
+    host_pkg = parser.parse(reader)
+    runner.set_verbose(verbose)
+    if uninstall:
+        return uninstall_pkg(host_pkg)
     else:
-        status = install_pkg(host_pkg)
-    exit(status)
-
-
-if __name__ == '__main__':
-    main()
+        return install_pkg(host_pkg)

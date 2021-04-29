@@ -1,6 +1,3 @@
-import reader as rd
-
-
 pkg_managers = set(['apt', 'pip'])
 
 
@@ -41,13 +38,7 @@ def parse_group(reader, host_pkg):
     finalize_group(hosts, pkg, host_pkg)
 
 
-def read_lines(path):
-    with open(path, 'r') as f:
-        return f.readlines()
-
-
-def parse(path):
-    reader = rd.Reader(read_lines(path))
+def parse(reader):
     host_pkg = {}
     while not reader.end():
         parse_group(reader, host_pkg)

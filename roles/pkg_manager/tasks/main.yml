@@ -1,6 +1,16 @@
-# TODO: loop over package managers
-
 ---
+- name: Verify os family
+  fail:
+    msg: "Incompatible os family"
+  when: ansible_os_family != "Debian"
+
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: yes
+    cache_valid_time: 600
+  become: true
+
+# TODO: loop over package managers
 - name: "Install all apt packages"
   import_tasks: pkg_apt.yml
 
