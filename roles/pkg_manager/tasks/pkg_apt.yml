@@ -1,4 +1,10 @@
 ---
+- name: Update apt cache
+  apt: 
+    update_cache: yes
+    cache_valid_time: 600
+  become: true
+
 - name: "Print all the apt packages to be {{ pkg_state }}"
   ansible.builtin.debug:
     msg: "{{ pkg['apt'] }}"

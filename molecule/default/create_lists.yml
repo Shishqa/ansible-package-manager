@@ -1,0 +1,41 @@
+---
+- name: Create valid package list
+  copy: 
+    dest: "{{ dir }}/list_valid"
+    content: |
+      192.168.10.10
+      apt nginx traceroute
+      192.168.10.11
+      192.168.10.12
+      pip pandas
+      apt nginx
+
+- name: Create package list with invalid host
+  copy: 
+    dest: "{{ dir }}/list_invalid_host"
+    content: |
+      192.168.10.123
+      apt nginx traceroute
+      192.168.10.11
+      192.168.10.12
+      apt nginx
+
+- name: Create package list with invalid package
+  copy: 
+    dest: "{{ dir }}/list_invalid_package"
+    content: |
+      192.168.10.11
+      192.168.10.10
+      apt nginx eelonmuskmode
+      192.168.10.12
+      apt nginx
+
+- name: Create package list with invalid package manager
+  copy: 
+    dest: "{{ dir }}/list_invalid_package_manager"
+    content: |
+      192.168.10.11
+      192.168.10.10
+      apt nginx
+      192.168.10.12
+      pacman nginx

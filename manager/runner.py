@@ -23,7 +23,9 @@ def run(host_pkg, state):
     status = subprocess.run([
         "ansible-playbook", playbook_path,
         "--extra-vars", json.dumps(vars)
-    ], stdout=devnull, stderr=devnull)
+    ], 
+    # stdout=devnull, stderr=devnull
+    )
 
     devnull.close()
 

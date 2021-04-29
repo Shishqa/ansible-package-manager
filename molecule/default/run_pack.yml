@@ -1,0 +1,6 @@
+---
+- name: "Run pack with args: {{ args }}"
+  ignore_errors: yes
+  shell: ANSIBLE_CONFIG=.ansible/ansible.cfg chdir=../../ ./pack "{{ args }}"
+  register: status
+  failed_when: status.rc != expect

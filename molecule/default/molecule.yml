@@ -1,0 +1,43 @@
+---
+dependency:
+  name: galaxy
+
+driver:
+  name: vagrant
+  provider: 
+    name: libvirt
+    type: libvirt
+    options:
+      memory: 256
+      cpus: 2
+
+platforms:
+  - name: test-ubuntu2010
+    box: generic/ubuntu2010
+    interfaces: 
+      - auto_config: true
+        network_name: private_network
+        type: static
+        ip: 192.168.10.10
+
+  - name: test-ubuntu2004
+    box: generic/ubuntu2004 
+    interfaces:
+      - auto_config: true
+        network_name: private_network
+        type: static
+        ip: 192.168.10.11
+
+  - name: test-ubuntu1810
+    box: generic/ubuntu1810
+    interfaces:
+      - auto_config: true
+        network_name: private_network
+        type: static
+        ip: 192.168.10.12
+
+provisioner:
+  name: ansible
+ 
+verifier:
+  name: ansible

@@ -1,0 +1,45 @@
+---
+- name: Prepare test environment
+  hosts: localhost
+  vars:
+    lists_dir: ../../tmp
+  tasks:
+    - name: Prepare lists directory
+      file:
+        path: "{{ lists_dir }}"
+        state: directory
+
+    - name: Create package lists
+      include_tasks: create_lists.yml 
+      vars:
+        dir: "{{ lists_dir }}"
+
+    - name: "EXPECT OK: Uninstall valid"
+      include_tasks: run_pack.yml
+      vars:
+        args: -u tmp/list_valid
+        expect: 0
+
+    - name: "EXPECT OK: Install valid"
+      include_tasks: run_pack.yml
+      vars:
+        args: tmp/list_valid
+        expect: 0
+
+    - name: "EXPECT FAIL: Install invalid package"
+      include_tasks: run_pack.yml
+      vars:
+        args: tmp/list_invalid_package
+        expect: 1
+
+    - name: "EXPECT FAIL: Install invalid hosts"
+      include_tasks: run_pack.yml
+      vars:
+        args: tmp/list_invalid_host
+        expect: 1
+
+    - name: "EXPECT FAIL: Install with invalid package manager"
+      include_tasks: run_pack.yml
+      vars:
+        args: tmp/list_invalid_package_manager
+        expect: 1
