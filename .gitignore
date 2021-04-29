@@ -1,3 +1,9 @@
 .ansible
+
+.venv
 __pycache__
+
+.pytest_cache
+.vagrant
+
 pkg_list

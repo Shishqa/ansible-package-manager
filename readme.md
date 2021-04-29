@@ -33,7 +33,7 @@ pip package_1 package_2 ... package_MK
 ## Usage
 
 Let the input looks like this:
-```
+```bash
 $ cat pkg_list
 192.168.100.11
 192.168.100.12
@@ -45,13 +45,19 @@ pip pep8
 ```
 
 To install these packages on these hosts, run
-```
+```bash
 $ ./pack pkg_list
 ```
 
 To uninstall packages, add `-u` flag
 
-## Ansible logs
+### Ansible logs
 
 To see ansible output, add `log_path` option to your ansible config
 
+## Testing
+
+Run tests:
+```bash
+$ pytest tests/
+```
