@@ -1,0 +1,7 @@
+#!/bin/bash
+
+export ANSIBLE_CONFIG=./tests/ansible/ansible.cfg
+export VAGRANT_CWD=./tests/ansible/
+
+vagrant up
+./pack.py $@
