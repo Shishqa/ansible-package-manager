@@ -1,0 +1,6 @@
+192.168.10.10
+apt nginx valgrind traceroute
+
+192.168.10.11
+192.168.10.12
+pip ansible 

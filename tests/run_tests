@@ -1,0 +1,13 @@
+#!/bin/bash -e
+
+export ANSIBLE_CONFIG=tests/ansible/ansible.cfg
+export VAGRANT_CWD=tests/ansible/
+
+echo "[[ creating instances ]]"
+vagrant up >> /dev/null
+
+echo "[[ running tests ]]"
+pytest tests/
+
+echo "[[ destroying instances ]]"
+vagrant destroy 

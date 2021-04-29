@@ -59,5 +59,5 @@ To see ansible output, add `log_path` option to your ansible config
 
 Run tests:
 ```bash
-$ pytest tests/
+$ ./tests/run_tests
 ```

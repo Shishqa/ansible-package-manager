@@ -1,0 +1,6 @@
+192.168.10.10
+apt nginx 
+
+yandex.ru
+192.168.10.12
+pip ansible 
