@@ -1,0 +1,8 @@
+192.168.10.10
+apt nginx valgrind traceroute
+arch https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-large-zip-file.zip /home/vagrant/test1
+arch https://www.learningcontainer.com/wp-content/uploads/2020/05/sample.tar /home/vagrant/test2
+
+192.168.10.11
+192.168.10.12
+pip ansible 

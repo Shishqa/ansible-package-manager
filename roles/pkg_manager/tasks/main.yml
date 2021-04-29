@@ -6,7 +6,10 @@
 
 # TODO: loop over package managers
 - name: "Install all apt packages"
-  import_tasks: pkg_apt.yml
+  include_tasks: pkg_apt.yml
 
 - name: "Install all pip packages"
-  import_tasks: pkg_pip.yml
+  include_tasks: pkg_pip.yml
+
+- name: Download and unpack archives
+  include_tasks: pkg_arch.yml

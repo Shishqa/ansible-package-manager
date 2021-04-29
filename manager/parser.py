@@ -1,7 +1,27 @@
 import copy
 
 
-pkg_managers = set(['apt', 'pip'])
+pkg_managers = set(['apt', 'pip', 'arch'])
+
+
+def parse_default(pkg_contaiter, pkg_list):
+    pkg_contaiter += pkg_list
+
+
+def parse_arch(pkg_contaiter, pkg_list):
+    num_elems = len(pkg_list)
+    if num_elems % 2 != 0:
+        raise
+    for idx in range(0, num_elems, 2):
+        arch = {'url': pkg_list[idx], 'dest': pkg_list[idx + 1]}
+        pkg_contaiter.append(arch)
+
+
+parsers = {
+    'apt': parse_default,
+    'pip': parse_default,
+    'arch': parse_arch
+}
 
 
 def init_host_pkg(host, host_pkg):
@@ -51,11 +71,12 @@ def collect_pkg(reader):
         chunks = get_chunks(reader)
         if not chunks[0] in pkg_managers:
             break
-        elif chunks[0] in pkg:
-            pkg[chunks[0]] += chunks[1:]
-        else:
-            pkg[chunks[0]] = chunks[1:]
+
+        if chunks[0] not in pkg:
+            pkg[chunks[0]] = []
+        parsers[chunks[0]](pkg[chunks[0]], chunks[1:])
         reader.next()
+
     print(pkg)
     return pkg
 
