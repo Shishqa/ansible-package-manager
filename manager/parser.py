@@ -1,40 +1,63 @@
+import copy
+
+
 pkg_managers = set(['apt', 'pip'])
 
 
 def finalize_group(hosts, pkg, host_pkg):
     for host in hosts:
-        host_pkg[host] = {}
-        for manager in pkg_managers:
-            if manager in pkg:
-                host_pkg[host][manager] = pkg[manager][:]  # copy
-            else:
-                host_pkg[host][manager] = []
+        if host not in host_pkg:
+            host_pkg[host] = copy.deepcopy(pkg)
+        else:
+            for manager in pkg:
+                if manager not in host_pkg[host]:
+                    host_pkg[host][manager] = []
+                host_pkg[host][manager] += copy.deepcopy(pkg[manager])
     hosts.clear()
     pkg.clear()
 
 
-def parse_group(reader, host_pkg):
-    hosts = []
-    pkg = {}
-    hosts_collected = False
-
-    while not reader.end():
-        line = reader.get().rstrip()
-        if len(line) == 0:
-            reader.next()
-            continue
-        line_split = line.split(' ')
-        if line_split[0] in pkg_managers:
-            hosts_collected = True
-            if line_split[0] in pkg:
-                pkg[line_split[0]] += line_split[1:]
-            else:
-                pkg[line_split[0]] = line_split[1:]
-        elif not hosts_collected:
-            hosts.append(line_split[0])
-        else:
-            break
+def get_chunks(reader):
+    line = reader.get().rstrip()
+    while len(line) == 0:
         reader.next()
+        line = reader.get().rstrip()
+    return line.split(' ')
+
+
+def collect_hosts(reader):
+    hosts = set()
+    while not reader.end():
+        chunks = get_chunks(reader)
+        if chunks[0] in pkg_managers:
+            break
+        elif len(chunks) > 1:
+            raise
+        else:
+            hosts.add(chunks[0])
+        reader.next()
+    print(hosts)
+    return hosts
+
+
+def collect_pkg(reader):
+    pkg = {}
+    while not reader.end():
+        chunks = get_chunks(reader)
+        if not chunks[0] in pkg_managers:
+            break
+        elif chunks[0] in pkg:
+            pkg[chunks[0]] += chunks[1:]
+        else:
+            pkg[chunks[0]] = chunks[1:]
+        reader.next()
+    print(pkg)
+    return pkg
+
+
+def parse_group(reader, host_pkg):
+    hosts = collect_hosts(reader)
+    pkg = collect_pkg(reader)
     finalize_group(hosts, pkg, host_pkg)
 
 
